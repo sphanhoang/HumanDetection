@@ -1,4 +1,3 @@
-import numpy as np
 import cv2 as cv
 
 
@@ -7,14 +6,9 @@ def get_frame():
     print("[get frame] Camera is on...")
     while True:
         isTrue, frame = cap.read()
-
-        resized = cv.resize(frame, (int(frame.shape[1] * 1), int(frame.shape[0] * 1)),
-                            interpolation=cv.INTER_CUBIC)
-
-
-        cv.imshow('Video', resized)
+        cv.imshow('Video', frame)
         if cv.waitKey(16) & 0xFF == ord('q'):
-            cv.imwrite('frame.jpg', resized)
+            cv.imwrite('frame.jpg', frame)
             print("[MAIN] Exiting program...")
             break
     cap.release()
@@ -57,6 +51,5 @@ def menu():
     else:
         print("Choose 1 or 2 only \n")
         menu()
-
 
 menu()
