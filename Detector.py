@@ -39,7 +39,7 @@ def detect(frame, net, index):
             # if the score's index (nth element) is also the index of "people" type
             # in classes[] array which is the first element (0), then we take
             # that bounding box. Also we only take if confident score greater than 0.5
-            if (class_id == index) & (confidence > 0.5):
+            if (class_id == index) & (confidence > 0.7):
                 # The first 4 elements in bounding box array are:
                 # x center, y center, box's width, box's height respectively
                 # We have to scale bounding box's coordinates back relative
@@ -59,7 +59,7 @@ def detect(frame, net, index):
                 # class_ids.append(class_id)
 
     # non-maximum suppression (NMS) to get rid of weak overlapping boxes
-    indexes = cv.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
+    indexes = cv.dnn.NMSBoxes(boxes, confidences, 0.7, 0.4)
 
     # Ensure that at least 1 detection exists
     # then save detection boxes' parameters
