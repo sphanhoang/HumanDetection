@@ -91,7 +91,7 @@ if __name__ == "__main__":
         classes = f.read().splitlines()
     # print(classes)
 
-    cap = cv.VideoCapture('./test.mp4') # change to 0 for live webcam
+    cap = cv.VideoCapture(0) # change to 0 for live webcam
     while True:
         isTrue, frame = cap.read()
         centroids, groundpoints, rectangles = detect(frame, yolo, index=classes.index("person"))

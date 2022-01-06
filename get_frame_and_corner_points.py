@@ -3,16 +3,18 @@ import cv2 as cv
 
 
 def get_frame():
-    cap = cv.VideoCapture('test.mp4')
+    cap = cv.VideoCapture(0)
+    print("[get frame] Camera is on...")
     while True:
         isTrue, frame = cap.read()
 
-        resized = cv.resize(frame, (int(frame.shape[1] * 0.7), int(frame.shape[0] * 0.7)),
+        resized = cv.resize(frame, (int(frame.shape[1] * 1), int(frame.shape[0] * 1)),
                             interpolation=cv.INTER_CUBIC)
+
 
         cv.imshow('Video', resized)
         if cv.waitKey(16) & 0xFF == ord('q'):
-            cv.imwrite('frame_test.jpg', resized)
+            cv.imwrite('frame.jpg', resized)
             print("[MAIN] Exiting program...")
             break
     cap.release()
@@ -30,6 +32,7 @@ def get_points(img):
 
     img = cv.imread(img)
     cv.namedWindow('image')
+    print("[get points] Select points...")
     cv.setMouseCallback('image', draw_circle)
     point = 1
     while (1):
@@ -57,5 +60,3 @@ def menu():
 
 
 menu()
-
-

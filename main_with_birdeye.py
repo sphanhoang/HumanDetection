@@ -110,16 +110,16 @@ width = blank_image.shape[1]
 # Capture video #
 #################
 print("[Detector] Capturing video stream...")
-cap = cv.VideoCapture('./test.mp4')  # change to 0 for live webcam
+cap = cv.VideoCapture(0)  # change to 0 for live webcam
 print("[MAIN] Program is running...")
 while True:
     blank = np.zeros((height,width,3), dtype='uint8')
     isTrue, frame = cap.read()
-    resized = cv.resize(frame, (int(frame.shape[1] * 0.7), int(frame.shape[0] * 0.7)),
-                        interpolation=cv.INTER_CUBIC)
+    # resized = cv.resize(frame, (int(frame.shape[1] * 0.7), int(frame.shape[0] * 0.7)),
+    #                     interpolation=cv.INTER_CUBIC)
 
     # get information from the dectector:
-    centroids, groundpoints, rectangles = detect(resized, yolo, index=classes.index("person"))
+    centroids, groundpoints, rectangles = detect(frame, yolo, index=classes.index("person"))
 
     # transform centroids and ground points to bird eye view:
     birdeye_points = point_transformation(matrix, groundpoints)
@@ -137,18 +137,18 @@ while True:
         cv.circle(blank, (int(x), int(y)), CIRCLE, COLOR, 2)
         cv.circle(blank, (int(x), int(y)), DOT, COLOR, -1)
         topleft_X, topleft_Y, botright_X, botright_Y = rectangles[i]
-        cv.rectangle(resized, (topleft_X, topleft_Y), (botright_X, botright_Y), COLOR, 2)
-        cv.circle(resized, groundpoints[i], 5, COLOR, -1)
+        cv.rectangle(frame, (topleft_X, topleft_Y), (botright_X, botright_Y), COLOR, 2)
+        cv.circle(frame, groundpoints[i], 5, COLOR, -1)
         text = "People at risk: {}".format(len(violate))
-        cv.putText(resized, text, (10, resized.shape[0] - 25),
+        cv.putText(frame, text, (10, frame.shape[0] - 25),
                     cv.FONT_HERSHEY_SIMPLEX, 0.85, COLOR, 3)
 
 
     # draw bird eye region on original frame:
-    draw_rectangle(corner_points, resized)
+    draw_rectangle(corner_points, frame)
     # show video:
     cv.imshow("Bird eye", blank)
-    cv.imshow('Video', resized)
+    cv.imshow('Video', frame)
     if cv.waitKey(16) & 0xFF == ord('q'):
         print("[MAIN] Exiting program...")
         break
