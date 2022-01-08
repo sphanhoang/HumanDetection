@@ -5,13 +5,14 @@ from Detector import detect
 
 CIRCLE = 10
 DOT = 3
-MIN_DISTANCE = 200
+MIN_DISTANCE = 300
 COLOR_RED = (0, 0, 255)
 COLOR_GREEN = (0, 255, 0)
 COLOR_BLUE = (255, 0, 0)
-corner_points = [(36, 386), (258, 172), (380, 466), (475, 202)]
+COLOR_YELLOW = (0,255,255)
+corner_points = [(6, 435), (140, 254), (553, 463), (474, 251)]
 width_og = 400
-height_og = 200
+height_og = 400
 static_img = "./frame.jpg"
 
 
@@ -109,7 +110,7 @@ height, width, _ = imgOutput.shape
 # Capture video #
 #################
 print("[Detector] Capturing video stream...")
-cap = cv.VideoCapture(2,  cv.CAP_DSHOW)  # change to 0 for live webcam
+cap = cv.VideoCapture(0,  cv.CAP_DSHOW)  # change to 0 for live webcam
 print("[MAIN] Program is running...")
 while True:
     violate = set()
@@ -130,9 +131,16 @@ while True:
         # show every point on bird eye and main frame view:
         for i in range (0, len(birdeye_points)):
             x, y = birdeye_points[i]
-            if i in violate:
+
+            if i in violate and len(violate)>=3:
                 COLOR = COLOR_RED
+                text_gather = "Gathering Violation"
+                cv.putText(frame, text_gather, (300, frame.shape[0] - 25),
+                            cv.FONT_HERSHEY_SIMPLEX, 0.85, COLOR, 3)
+            elif i in violate:
+                COLOR = COLOR_YELLOW
                 print("-10 SOCIAL CREDIT")
+
             cv.circle(blank, (int(x), int(y)), CIRCLE, COLOR, 2)
             cv.circle(blank, (int(x), int(y)), DOT, COLOR, -1)
             topleft_X, topleft_Y, botright_X, botright_Y = rectangles[i]
