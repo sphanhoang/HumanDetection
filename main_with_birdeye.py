@@ -11,8 +11,8 @@ COLOR_GREEN = (0, 255, 0)
 COLOR_BLUE = (255, 0, 0)
 COLOR_YELLOW = (0,255,255)
 corner_points = [(6, 435), (140, 254), (553, 463), (474, 251)]
-width_og = 400
-height_og = 400
+width_og = 480
+height_og = 480
 static_img = "./frame.jpg"
 
 
@@ -110,7 +110,7 @@ height, width, _ = imgOutput.shape
 # Capture video #
 #################
 print("[Detector] Capturing video stream...")
-cap = cv.VideoCapture(0,  cv.CAP_DSHOW)  # change to 0 for live webcam
+cap = cv.VideoCapture(1,  cv.CAP_DSHOW)  # change to 0 for live webcam
 print("[MAIN] Program is running...")
 while True:
     violate = set()
@@ -145,7 +145,7 @@ while True:
             cv.circle(blank, (int(x), int(y)), DOT, COLOR, -1)
             topleft_X, topleft_Y, botright_X, botright_Y = rectangles[i]
             cv.rectangle(frame, (topleft_X, topleft_Y), (botright_X, botright_Y), COLOR, 2)
-            cv.circle(frame, groundpoints[i], 5, COLOR, -1)
+            cv.circle(frame, centroids[i], 5, COLOR, -1)
     text = "People at risk: {}".format(len(violate))
     cv.putText(frame, text, (10, frame.shape[0] - 25),
                 cv.FONT_HERSHEY_SIMPLEX, 0.85, COLOR, 3)
@@ -153,8 +153,11 @@ while True:
     # draw bird eye region on original frame:
     draw_rectangle(corner_points, frame)
     # show video:
-    cv.imshow("Bird eye", blank)
-    cv.imshow('Video', frame)
+    # cv.imshow("Bird eye", blank)
+    # cv.imshow('Video', frame)
+    hor = np.hstack((frame,blank))
+    cv.imshow("Social Distancing analyzer", hor)
+
     if cv.waitKey(16) & 0xFF == ord('q'):
         print("[MAIN] Exiting program...")
         break
