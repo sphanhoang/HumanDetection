@@ -136,7 +136,7 @@ while True:
                 COLOR = COLOR_RED
                 text_gather = "Gathering Violation"
                 cv.putText(frame, text_gather, (300, frame.shape[0] - 25),
-                            cv.FONT_HERSHEY_SIMPLEX, 0.85, COLOR, 3)
+                            cv.FONT_HERSHEY_SIMPLEX, 0.5, COLOR, 2)
             elif i in violate:
                 COLOR = COLOR_YELLOW
                 print("-10 SOCIAL CREDIT")
@@ -148,7 +148,7 @@ while True:
             cv.circle(frame, centroids[i], 5, COLOR, -1)
     text = "People at risk: {}".format(len(violate))
     cv.putText(frame, text, (10, frame.shape[0] - 25),
-                cv.FONT_HERSHEY_SIMPLEX, 0.85, COLOR, 3)
+                cv.FONT_HERSHEY_SIMPLEX, 0.5, COLOR, 2)
 
     # draw bird eye region on original frame:
     draw_rectangle(corner_points, frame)
