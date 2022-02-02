@@ -133,7 +133,7 @@ while True:
         x, y = birdeye_points[i]
         if i in violate:
             COLOR = COLOR_RED
-            print("-10 SOCIAL CREDIT")
+            # print("-10 SOCIAL CREDIT")
         cv.circle(blank, (int(x), int(y)), CIRCLE, COLOR, 2)
         cv.circle(blank, (int(x), int(y)), DOT, COLOR, -1)
         topleft_X, topleft_Y, botright_X, botright_Y = rectangles[i]
