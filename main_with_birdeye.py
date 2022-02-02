@@ -5,13 +5,13 @@ from Detector import detect
 
 CIRCLE = 10
 DOT = 3
-MIN_DISTANCE = 300
+MIN_DISTANCE = 215
 COLOR_RED = (0, 0, 255)
 COLOR_GREEN = (0, 255, 0)
 COLOR_BLUE = (255, 0, 0)
 COLOR_YELLOW = (0,255,255)
-corner_points = [(6, 435), (140, 254), (553, 463), (474, 251)]
-width_og = 480
+corner_points = [(12, 258), (298, 91), (469, 479), (612, 186)]
+width_og = 549
 height_og = 480
 static_img = "./frame.jpg"
 
@@ -110,7 +110,7 @@ height, width, _ = imgOutput.shape
 # Capture video #
 #################
 print("[Detector] Capturing video stream...")
-cap = cv.VideoCapture(1,  cv.CAP_DSHOW)  # change to 0 for live webcam
+cap = cv.VideoCapture(0,  cv.CAP_DSHOW)  # change to 0 for live webcam
 print("[MAIN] Program is running...")
 while True:
     violate = set()
@@ -139,7 +139,7 @@ while True:
                             cv.FONT_HERSHEY_SIMPLEX, 0.5, COLOR, 2)
             elif i in violate:
                 COLOR = COLOR_YELLOW
-                print("-10 SOCIAL CREDIT")
+                #print("-10 SOCIAL CREDIT")
 
             cv.circle(blank, (int(x), int(y)), CIRCLE, COLOR, 2)
             cv.circle(blank, (int(x), int(y)), DOT, COLOR, -1)
